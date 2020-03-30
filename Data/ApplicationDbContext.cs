@@ -9,10 +9,14 @@ namespace DubuisGelin.Data
 {
     public class ApplicationDbContext : IdentityDbContext
     {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
-            : base(options)
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options): base(options)
         {
         }
+        public DbSet<User> Utilisateur { get; set; }
+        public DbSet<Table> Tables { get; set; }
+        public DbSet<Champs> Champs { get; set; }
+        public DbSet<Value> Values { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -31,6 +35,7 @@ namespace DubuisGelin.Data
             modelBuilder.Entity<Champs>().HasKey(b => b.Id);
             modelBuilder.Entity<Champs>().HasOne(m => m.Table).WithMany(m => m.Champs);
             modelBuilder.Entity<Champs>().HasMany(m => m.Values).WithOne(m => m.Champs).HasForeignKey(w=>w.ChampsId);
+            modelBuilder.Entity<Champs>().Property(w => w.TypeEnum).IsRequired();
 
             modelBuilder.Entity<Value>().ToTable(nameof(Value));
             modelBuilder.Entity<Value>().HasKey(b => b.Id);

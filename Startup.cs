@@ -12,6 +12,8 @@ using Microsoft.EntityFrameworkCore;
 using DubuisGelin.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using DubuisGelin.Services.Interface;
+using DubuisGelin.Services.Implementation;
 
 namespace DubuisGelin
 {
@@ -37,10 +39,22 @@ namespace DubuisGelin
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
-            services.AddDefaultIdentity<IdentityUser>()
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+            //services.AddDefaultIdentity<IdentityUser>()
+            //    .AddEntityFrameworkStores<ApplicationDbContext>();
+
+            services
+                .AddIdentity<IdentityUser, IdentityRole>()
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddSignInManager()
+                .AddDefaultUI()
+                .AddDefaultTokenProviders();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+            //services.AddScoped<IUserService, UserService>();
+            //services.AddScoped<ITableService, TableService>();
+            services.AddTransient<ITableService, TableService>();
+            services.AddTransient<IUserService, UserService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -63,6 +77,10 @@ namespace DubuisGelin
 
             app.UseAuthentication();
 
+            using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
+            {
+                (serviceScope.ServiceProvider.GetService<IUserService>() ?? throw new Exception("")).InitDataRole().GetAwaiter().GetResult();
+            }
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
