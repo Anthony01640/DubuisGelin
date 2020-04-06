@@ -21,5 +21,10 @@ namespace DubuisGelin.Services.Implementation
         {
             return Context.LiaisonValueChamps;
         }
+
+        public void CreateLiaison()
+        {
+
+        }
     }
 }

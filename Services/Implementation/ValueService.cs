@@ -28,5 +28,10 @@ namespace DubuisGelin.Services.Implementation
             return Context.Values.Where(w => w.IdLiaison == idLiaison);
         }
 
+        public async Task CreateValue()
+        {
+
+        }
+
     }
 }
