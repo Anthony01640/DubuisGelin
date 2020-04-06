@@ -14,6 +14,5 @@ namespace DubuisGelin.Services.Interface
 
         User GetUserById(Guid Id);
 
-        Task InitDataRole();
     }
 }

@@ -39,8 +39,7 @@ namespace DubuisGelin
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
-            //services.AddDefaultIdentity<IdentityUser>()
-            //    .AddEntityFrameworkStores<ApplicationDbContext>();
+            
 
             services
                 .AddIdentity<IdentityUser, IdentityRole>()
@@ -59,8 +58,10 @@ namespace DubuisGelin
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ApplicationDbContext dbContext)
         {
+
+            dbContext.Database.Migrate();
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -78,10 +79,6 @@ namespace DubuisGelin
 
             app.UseAuthentication();
 
-            using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
-            {
-                (serviceScope.ServiceProvider.GetService<IUserService>() ?? throw new Exception("")).InitDataRole().GetAwaiter().GetResult();
-            }
             app.UseMvc(routes =>
             {
                 routes.MapRoute(

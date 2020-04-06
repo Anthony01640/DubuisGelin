@@ -39,25 +39,5 @@ namespace DubuisGelin.Services.Implementation
         {
             return _context.Utilisateur.FirstOrDefault(m => m.Id == Id);
         }
-
-        public async Task InitDataRole()
-        {
-            if (RoleManager == null)
-                throw new ArgumentNullException(nameof(RoleManager));
-
-            if (RoleManager.Roles.Any())
-            {
-                return;
-            }
-            var Roles_new = new List<IdentityRole>
-            {
-            new IdentityRole{Name = "Utilisateur", Id = "1"},
-            };
-
-            foreach (var role in Roles_new)
-            {
-                await RoleManager.CreateAsync(role);
-            }
-        }
     }
 }
