@@ -51,11 +51,11 @@ namespace DubuisGelin
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
-            //services.AddScoped<IUserService, UserService>();
-            //services.AddScoped<ITableService, TableService>();
             services.AddTransient<ITableService, TableService>();
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IChampsService, ChampsService>();
+            services.AddTransient<IValueService, ValueService>();
+            services.AddTransient<ILiaisonValueService, LiaisonService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

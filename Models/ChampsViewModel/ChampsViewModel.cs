@@ -9,6 +9,6 @@ namespace DubuisGelin.Models.ChampsViewModel
     {
         public string Nom { get; set; }
 
-        public int Id { get;set }
+        public int Id { get; set; }
     }
 }
