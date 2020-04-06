@@ -34,6 +34,7 @@ namespace DubuisGelin.Controllers
             ValueService = valueService ?? throw new ArgumentNullException(nameof(valueService));
         }
 
+        [HttpGet]
         public IActionResult Index()
         {
             var indexViewModel = new IndexViewModel();
@@ -47,6 +48,7 @@ namespace DubuisGelin.Controllers
             return View(indexViewModel);
         }
 
+        [HttpGet("/create")]
         public IActionResult CreateTable()
         {
             var createTableVM = new CreateTableViewModel
@@ -56,9 +58,8 @@ namespace DubuisGelin.Controllers
             return View(createTableVM);
         }
 
-        [HttpPost]
+        [HttpPost("/create")]
         [ValidateAntiForgeryToken]
-
         public IActionResult CreateTable(CreateTableViewModel createTableVM)
         {
             if (ModelState.IsValid)
