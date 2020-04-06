@@ -8,25 +8,18 @@ using System.Threading.Tasks;
 
 namespace DubuisGelin.Services.Implementation
 {
-    public class ValueService : IValueService
+    public class LiaisonService : ILiaisonValueService
     {
-        public ValueService(ApplicationDbContext context)
+        public LiaisonService(ApplicationDbContext context)
         {
             Context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
         public ApplicationDbContext Context { get; }
 
-        public IEnumerable<Value> GetValue(int idChamps)
+        public IEnumerable<LiaisonValueChamps> GetAllLiaison()
         {
-            return Context.Values.Where(w => w.ChampsId == idChamps);
-
+            return Context.LiaisonValueChamps;
         }
-
-        public IEnumerable<Value> GetValueFromLiaison(int idLiaison)
-        {
-            return Context.Values.Where(w => w.IdLiaison == idLiaison);
-        }
-
     }
 }

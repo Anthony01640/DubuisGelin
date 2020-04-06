@@ -11,6 +11,8 @@ using Microsoft.AspNetCore.Authorization;
 using DubuisGelin.Models.HomeController;
 using DubuisGelin.Models.TableViewModel;
 using DubuisGelin.Services.Interface;
+using DubuisGelin.Models.LiaisonViewModel;
+using DubuisGelin.Models.ValueViewModel;
 
 namespace DubuisGelin.Controllers
 {
@@ -20,12 +22,16 @@ namespace DubuisGelin.Controllers
         public IUserService UserService { get; }
         public ITableService TableService { get; }
         public IChampsService ChampsService { get; }
+        public ILiaisonValueService LiaisonValueService { get; }
+        public IValueService ValueService { get; }
 
-        public HomeController(IUserService userService, ITableService tableService, IChampsService champsService)
+        public HomeController(IUserService userService, ITableService tableService, IChampsService champsService, ILiaisonValueService liaisonValueService, IValueService valueService)
         {
             UserService = userService ?? throw new ArgumentNullException(nameof(userService));
             TableService = tableService ?? throw new ArgumentNullException(nameof(tableService));
             ChampsService = champsService ?? throw new ArgumentNullException(nameof(champsService));
+            LiaisonValueService = liaisonValueService ?? throw new ArgumentNullException(nameof(liaisonValueService));
+            ValueService = valueService ?? throw new ArgumentNullException(nameof(valueService));
         }
 
         public IActionResult Index()
@@ -68,6 +74,13 @@ namespace DubuisGelin.Controllers
                 NameTable = TableService.GetTableById(id).Nom,
                 ListeChamps = ChampsService.GetChampsFromTable(id).Select(p => new ChampViewModel {
                     Nom = p.Name,
+                }).ToList(),
+                ListeLiaison = LiaisonValueService.GetAllLiaison().Select(w => new LiaisonTableIndexViewModel {
+                    Id = w.Id,
+                    ListeValue = ValueService.GetValueFromLiaison(w.Id).Select(a => new ValuesViewModel {
+                        Nom = a.Name,
+                        IdChamps = a.ChampsId
+                    }).ToList(),
                 }).ToList(),
             };
             return View(indexTable);

@@ -9,7 +9,6 @@ namespace DubuisGelin.Data.Entity
     {
         public int Id { get; set; }
 
-        public List<Value> EnsembleValeurs{ get; set; }
-
+        public IEnumerable<Value> Values { get; set; }
     }
 }

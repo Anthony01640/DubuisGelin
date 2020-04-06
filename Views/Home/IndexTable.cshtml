@@ -1,0 +1,23 @@
+﻿@model DubuisGelin.Models.HomeController.IndexTableViewModel
+
+<h2>IndexTable</h2>
+
+<table>
+    <tr>
+        @foreach (var champ in Model.ListeChamps)
+        {
+            <th>@champ.Nom</th>
+        }
+    </tr>
+    @foreach (var liaison in Model.ListeLiaison)
+    {
+        <tr>
+            @foreach (var item in liaison.ListeValue)
+            {
+                <td>@item.Nom</td>
+            }
+        </tr>
+        
+    }
+
+</table>

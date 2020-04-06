@@ -8,5 +8,7 @@ namespace DubuisGelin.Models.ValueViewModel
     public class ValuesViewModel
     {
         public string Nom { get; set; }
+
+        public int IdChamps { get; set; }
     }
 }

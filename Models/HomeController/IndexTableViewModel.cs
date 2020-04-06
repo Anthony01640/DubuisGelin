@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DubuisGelin.Models.ChampsViewModel;
+using DubuisGelin.Models.LiaisonViewModel;
 using DubuisGelin.Models.ValueViewModel;
 
 namespace DubuisGelin.Models.HomeController
@@ -13,6 +14,6 @@ namespace DubuisGelin.Models.HomeController
 
         public List<ChampViewModel> ListeChamps { get; set; } 
 
-        public List<ValuesViewModel> ListeValue { get; set; }
+        public List<LiaisonTableIndexViewModel> ListeLiaison { get; set; }
     }
 }

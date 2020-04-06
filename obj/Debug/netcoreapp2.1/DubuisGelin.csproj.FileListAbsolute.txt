@@ -79,3 +79,4 @@ C:\Users\adubuis\source\repos\DubuisGelin-antho\obj\Debug\netcoreapp2.1\DubuisGe
 C:\Users\adubuis\source\repos\DubuisGelin-antho\obj\Debug\netcoreapp2.1\DubuisGelin.csprojAssemblyReference.cache
 C:\Users\adubuis\source\repos\DubuisGelin-antho\obj\Debug\netcoreapp2.1\UserSecretsAssemblyInfo.cs
 C:\Users\adubuis\source\repos\DubuisGelin-antho\obj\Debug\netcoreapp2.1\Razor\Views\Home\CreateTable.g.cshtml.cs
+C:\Users\adubuis\source\repos\DubuisGelin-antho\obj\Debug\netcoreapp2.1\Razor\Views\Home\IndexTable.g.cshtml.cs

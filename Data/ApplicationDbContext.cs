@@ -9,13 +9,15 @@ namespace DubuisGelin.Data
 {
     public class ApplicationDbContext : IdentityDbContext
     {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options): base(options)
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
         }
         public DbSet<User> Utilisateur { get; set; }
         public DbSet<Table> Tables { get; set; }
         public DbSet<Champs> Champs { get; set; }
         public DbSet<Value> Values { get; set; }
+
+        public DbSet<LiaisonValueChamps> LiaisonValueChamps { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -34,13 +36,17 @@ namespace DubuisGelin.Data
             modelBuilder.Entity<Champs>().ToTable(nameof(Champs));
             modelBuilder.Entity<Champs>().HasKey(b => b.Id);
             modelBuilder.Entity<Champs>().HasOne(m => m.Table).WithMany(m => m.Champs);
-            modelBuilder.Entity<Champs>().HasMany(m => m.Values).WithOne(m => m.Champs).HasForeignKey(w=>w.ChampsId);
+            modelBuilder.Entity<Champs>().HasMany(m => m.Values).WithOne(m => m.Champs).HasForeignKey(w => w.ChampsId);
             modelBuilder.Entity<Champs>().Property(w => w.TypeEnum).IsRequired();
 
             modelBuilder.Entity<Value>().ToTable(nameof(Value));
             modelBuilder.Entity<Value>().HasKey(b => b.Id);
             modelBuilder.Entity<Value>().HasOne(w => w.Champs).WithMany(m => m.Values);
+            modelBuilder.Entity<Value>().HasOne(w => w.LiaisonValueChamps).WithMany(m => m.Values);
 
+            modelBuilder.Entity<LiaisonValueChamps>().ToTable(nameof(LiaisonValueChamps));
+            modelBuilder.Entity<LiaisonValueChamps>().HasKey(w => w.Id);
+            modelBuilder.Entity<LiaisonValueChamps>().HasMany(m => m.Values).WithOne(w => w.LiaisonValueChamps).HasForeignKey(p => p.IdLiaison);
         }
     }
 }

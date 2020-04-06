@@ -8,5 +8,7 @@ namespace DubuisGelin.Models.ChampsViewModel
     public class ChampViewModel
     {
         public string Nom { get; set; }
+
+        public int Id { get;set }
     }
 }

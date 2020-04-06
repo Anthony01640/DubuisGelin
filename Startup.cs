@@ -55,6 +55,7 @@ namespace DubuisGelin
             //services.AddScoped<ITableService, TableService>();
             services.AddTransient<ITableService, TableService>();
             services.AddTransient<IUserService, UserService>();
+            services.AddTransient<IChampsService, ChampsService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
