@@ -13,6 +13,7 @@ using DubuisGelin.Models.TableViewModel;
 using DubuisGelin.Services.Interface;
 using DubuisGelin.Models.LiaisonViewModel;
 using DubuisGelin.Models.ValueViewModel;
+using DubuisGelin.Services.Enums;
 
 namespace DubuisGelin.Controllers
 {
@@ -69,6 +70,8 @@ namespace DubuisGelin.Controllers
             }
             return View();
         }
+
+        [HttpGet("/indexChamps/{id}")]
         public IActionResult IndexTable(int id)
         {
             var indexTable = new IndexTableViewModel()
@@ -88,8 +91,26 @@ namespace DubuisGelin.Controllers
             return View(indexTable);
         }
 
+        [HttpGet("/addchamps/{id}")]
         public IActionResult AddChampsToTable(int id)
         {
+            var addChampsToTableVM = new AddChampsToTableViewModel
+            {
+                IdTable = id,
+                Table = TableService.GetTableById(id)
+            };
+            return View(addChampsToTableVM);
+        }
+
+        [HttpPost("/addchamps/{id}")]
+        [ValidateAntiForgeryToken]
+        public IActionResult AddChampsToTable(AddChampsToTableViewModel addChampsToTableVM)
+        {
+            if (ModelState.IsValid)
+            {
+                ChampsService.AddChampsToTable(addChampsToTableVM.Name, addChampsToTableVM.IdTable, addChampsToTableVM.Table, addChampsToTableVM.Type);
+                return RedirectToAction(nameof(HomeController.Index));
+            }
             return View();
         }
 
@@ -97,5 +118,6 @@ namespace DubuisGelin.Controllers
         {
             return View();
         }
+
     }
 }
