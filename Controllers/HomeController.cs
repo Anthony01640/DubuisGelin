@@ -114,8 +114,29 @@ namespace DubuisGelin.Controllers
             return View();
         }
 
-        public IActionResult AddValues(int id)
+        public IActionResult AddValues(int idTable)
         {
+            var newVal = new CreateValueViewModel()
+            {
+                ListeChamps = ChampsService.GetChampsFromTable(idTable).Select(w => new ChampsCreateValueViewModel()
+                {
+                    Id = w.Id,
+                    Nom = w.Name,
+                }).ToList(),
+
+            };
+            return View(newVal);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+
+        public IActionResult AddValues(CreateValueViewModel createvalue)
+        {
+            createvalue.IdLiaison = LiaisonValueService.CreateLiaison(null);
+            foreach (var item in createvalue.ListeChamps)
+            {
+                ValueService.CreateValue(item.NomValeur, createvalue.IdLiaison, item.Id);
+            }
             return View();
         }
 

@@ -9,5 +9,9 @@ namespace DubuisGelin.Services.Interface
     public interface ILiaisonValueService
     {
         IEnumerable<LiaisonValueChamps> GetAllLiaison();
+
+        int CreateLiaison(IEnumerable<Value> Values);
+
+        void UpdateLiaison(IEnumerable<Value> values, int idLiaison);
     }
 }
