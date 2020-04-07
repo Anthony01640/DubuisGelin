@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DubuisGelin.Services.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -16,5 +17,7 @@ namespace DubuisGelin.Data.Entity
         public Table Table { get; set; }
 
         public IEnumerable<Value> Values { get; set; }
+
+        public TypeEnum TypeEnum { get; set; }
     }
 }

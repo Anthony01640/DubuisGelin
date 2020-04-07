@@ -12,6 +12,8 @@ using Microsoft.EntityFrameworkCore;
 using DubuisGelin.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using DubuisGelin.Services.Interface;
+using DubuisGelin.Services.Implementation;
 
 namespace DubuisGelin
 {
@@ -37,15 +39,29 @@ namespace DubuisGelin
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
-            services.AddDefaultIdentity<IdentityUser>()
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+            
+
+            services
+                .AddIdentity<IdentityUser, IdentityRole>()
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddSignInManager()
+                .AddDefaultUI()
+                .AddDefaultTokenProviders();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+            services.AddTransient<ITableService, TableService>();
+            services.AddTransient<IUserService, UserService>();
+            services.AddTransient<IChampsService, ChampsService>();
+            services.AddTransient<IValueService, ValueService>();
+            services.AddTransient<ILiaisonValueService, LiaisonService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ApplicationDbContext dbContext)
         {
+
+            dbContext.Database.Migrate();
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

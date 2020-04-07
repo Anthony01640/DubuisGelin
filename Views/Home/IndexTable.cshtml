@@ -1,0 +1,26 @@
+﻿@model DubuisGelin.Models.HomeController.IndexTableViewModel
+@using DubuisGelin.Controllers
+
+<h2>IndexTable</h2>
+
+@Html.ActionLink("Créer un champs", nameof(HomeController.AddChampsToTable), "Home")
+
+<table>
+    <tr>
+        @foreach (var champ in Model.ListeChamps)
+        {
+            <th>@champ.Nom</th>
+        }
+    </tr>
+    @foreach (var liaison in Model.ListeLiaison)
+    {
+        <tr>
+            @foreach (var item in liaison.ListeValue)
+            {
+                <td>@item.Nom</td>
+            }
+        </tr>
+
+    }
+
+</table>

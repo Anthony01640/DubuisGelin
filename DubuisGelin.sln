@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.1000
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DubuisGelin", "DubuisGelin.csproj", "{238228C2-AE71-4F9D-BAE5-260A6F71D6BD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{238228C2-AE71-4F9D-BAE5-260A6F71D6BD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{238228C2-AE71-4F9D-BAE5-260A6F71D6BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{238228C2-AE71-4F9D-BAE5-260A6F71D6BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{238228C2-AE71-4F9D-BAE5-260A6F71D6BD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D4DBD4AE-4833-4C13-8460-83EB082967F0}
+	EndGlobalSection
+EndGlobal

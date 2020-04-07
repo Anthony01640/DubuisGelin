@@ -15,7 +15,7 @@ namespace DubuisGelin.Data.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.1.4-rtm-31024")
+                .HasAnnotation("ProductVersion", "2.1.14-servicing-32113")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -29,11 +29,24 @@ namespace DubuisGelin.Data.Migrations
 
                     b.Property<int>("TableId");
 
+                    b.Property<int>("TypeEnum");
+
                     b.HasKey("Id");
 
                     b.HasIndex("TableId");
 
                     b.ToTable("Champs");
+                });
+
+            modelBuilder.Entity("DubuisGelin.Data.Entity.LiaisonValueChamps", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("LiaisonValueChamps");
                 });
 
             modelBuilder.Entity("DubuisGelin.Data.Entity.Table", b =>
@@ -76,11 +89,15 @@ namespace DubuisGelin.Data.Migrations
 
                     b.Property<int>("ChampsId");
 
+                    b.Property<int>("IdLiaison");
+
                     b.Property<string>("Name");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ChampsId");
+
+                    b.HasIndex("IdLiaison");
 
                     b.ToTable("Value");
                 });
@@ -107,6 +124,10 @@ namespace DubuisGelin.Data.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles");
+
+                    b.HasData(
+                        new { Id = "1", ConcurrencyStamp = "b1ad5b97-999b-48c1-bb2c-c971792aaa6b", Name = "Utilisateur", NormalizedName = "UTILISATEUR" }
+                    );
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -202,11 +223,9 @@ namespace DubuisGelin.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.Property<string>("LoginProvider")
-                        .HasMaxLength(128);
+                    b.Property<string>("LoginProvider");
 
-                    b.Property<string>("ProviderKey")
-                        .HasMaxLength(128);
+                    b.Property<string>("ProviderKey");
 
                     b.Property<string>("ProviderDisplayName");
 
@@ -237,11 +256,9 @@ namespace DubuisGelin.Data.Migrations
                 {
                     b.Property<string>("UserId");
 
-                    b.Property<string>("LoginProvider")
-                        .HasMaxLength(128);
+                    b.Property<string>("LoginProvider");
 
-                    b.Property<string>("Name")
-                        .HasMaxLength(128);
+                    b.Property<string>("Name");
 
                     b.Property<string>("Value");
 
@@ -271,6 +288,11 @@ namespace DubuisGelin.Data.Migrations
                     b.HasOne("DubuisGelin.Data.Entity.Champs", "Champs")
                         .WithMany("Values")
                         .HasForeignKey("ChampsId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("DubuisGelin.Data.Entity.LiaisonValueChamps", "LiaisonValueChamps")
+                        .WithMany("Values")
+                        .HasForeignKey("IdLiaison")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
