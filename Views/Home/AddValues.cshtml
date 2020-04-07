@@ -4,8 +4,10 @@
 
 <h2>Ajouter une valeur</h2>
 
-@using (Html.BeginForm(nameof(HomeController.CreateTable), "Home", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+@using (Html.BeginForm(nameof(HomeController.AddValues), "Home", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
+    
+
     @foreach (var champs in Model.ListeChamps)
     {
         <label>Entrez une valeur pour le champ @champs.Nom</label>
