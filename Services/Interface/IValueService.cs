@@ -11,5 +11,7 @@ namespace DubuisGelin.Services.Interface
         IEnumerable<Value> GetValue(int idChamps);
 
         IEnumerable<Value> GetValueFromLiaison(int idLiaison);
+
+        void CreateValue(string name, int idLiaison, int idChamps);
     }
 }

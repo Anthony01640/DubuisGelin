@@ -22,9 +22,32 @@ namespace DubuisGelin.Services.Implementation
             return Context.LiaisonValueChamps;
         }
 
-        public void CreateLiaison()
+        public LiaisonValueChamps GetLiaison(int id)
         {
+            return Context.LiaisonValueChamps.FirstOrDefault(w => w.Id == id);
+        }
 
+        public int CreateLiaison(IEnumerable<Value> Values)
+        {
+            var liaison = new LiaisonValueChamps();
+            if (Values == null)
+            {
+                
+            }
+            else
+            {
+                liaison.Values = Values.ToList();
+            }
+            Context.LiaisonValueChamps.Add(liaison);
+            return liaison.Id;
+        }
+
+        public void UpdateLiaison(IEnumerable<Value> values, int idLiaison)
+        {
+            var liaison = GetLiaison(idLiaison);
+            liaison.Values.AddRange(values);
+            Context.LiaisonValueChamps.Update(liaison);
+            Context.SaveChanges();
         }
     }
 }

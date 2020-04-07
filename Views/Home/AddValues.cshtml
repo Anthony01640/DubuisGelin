@@ -1,18 +1,18 @@
-﻿@model DubuisGelin.Models.HomeController.CreateTableViewModel
+﻿@model DubuisGelin.Models.ValueViewModel.CreateValueViewModel
 
 @using DubuisGelin.Controllers
-<h1>Créer une table</h1>
+
+<h2>Ajouter une valeur</h2>
 
 @using (Html.BeginForm(nameof(HomeController.CreateTable), "Home", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
-    @Html.HiddenFor(m=>m.IdUser)
-    <div class="form-group">
-    
-    <label>Entrez le nom de la table</label>
-    <div>
-        @Html.EditorFor(m => m.Nom)
-    </div>
-</div>
+    @foreach (var champs in Model.ListeChamps)
+    {
+        <label>Entrez une valeur pour le champ @champs.Nom</label>
+        <div>
+            @Html.EditorFor(m => champs.NomValeur)
+        </div>
+    }
     <div style="display : flex; ">
         <div class="form-group">
             <div class="">
@@ -20,4 +20,6 @@
             </div>
         </div>
     </div>
+
 }
+
