@@ -13,6 +13,7 @@ using DubuisGelin.Models.TableViewModel;
 using DubuisGelin.Services.Interface;
 using DubuisGelin.Models.LiaisonViewModel;
 using DubuisGelin.Models.ValueViewModel;
+using DubuisGelin.Services.Enums;
 
 namespace DubuisGelin.Controllers
 {
@@ -69,6 +70,8 @@ namespace DubuisGelin.Controllers
             }
             return View();
         }
+
+        [HttpGet("/indexChamps/{id}")]
         public IActionResult IndexTable(int id)
         {
             var indexTable = new IndexTableViewModel()
@@ -88,35 +91,33 @@ namespace DubuisGelin.Controllers
             return View(indexTable);
         }
 
+        [HttpGet("/addchamps/{id}")]
         public IActionResult AddChampsToTable(int id)
         {
-            return View();
-        }
-
-        public IActionResult AddValues(int idTable)
-        {
-            var newVal = new CreateValueViewModel()
+            var addChampsToTableVM = new AddChampsToTableViewModel
             {
-                ListeChamps = ChampsService.GetChampsFromTable(idTable).Select(w => new ChampsCreateValueViewModel()
-                {
-                    Id = w.Id,
-                    Nom = w.Name,
-                }).ToList(),
-                
+                IdTable = id,
+                Table = TableService.GetTableById(id)
             };
-            return View(newVal);
+            return View(addChampsToTableVM);
         }
-        [HttpPost]
-        [ValidateAntiForgeryToken]
 
-        public IActionResult AddValues(CreateValueViewModel createvalue)
+        [HttpPost("/addchamps/{id}")]
+        [ValidateAntiForgeryToken]
+        public IActionResult AddChampsToTable(AddChampsToTableViewModel addChampsToTableVM)
         {
-            createvalue.IdLiaison = LiaisonValueService.CreateLiaison(null);
-            foreach (var item in createvalue.ListeChamps)
+            if (ModelState.IsValid)
             {
-                ValueService.CreateValue(item.NomValeur, createvalue.IdLiaison, item.Id);
+                ChampsService.AddChampsToTable(addChampsToTableVM.Name, addChampsToTableVM.IdTable, addChampsToTableVM.Table, addChampsToTableVM.Type);
+                return RedirectToAction(nameof(HomeController.Index));
             }
             return View();
         }
+
+        public IActionResult AddValues(int id)
+        {
+            return View();
+        }
+
     }
 }
