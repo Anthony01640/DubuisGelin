@@ -125,3 +125,4 @@ C:\Dev\ProjetSpe\DubuisGelin\obj\Debug\netcoreapp2.1\DubuisGelin.dll
 C:\Dev\ProjetSpe\DubuisGelin\obj\Debug\netcoreapp2.1\DubuisGelin.pdb
 C:\Dev\ProjetSpe\DubuisGelin\obj\Debug\netcoreapp2.1\DubuisGelin.csproj.CopyComplete
 C:\Users\adubuis\source\repos\DubuisGelin-antho\obj\Debug\netcoreapp2.1\Razor\Views\Home\AddValues.g.cshtml.cs
+C:\Users\adubuis\source\repos\DubuisGelin-antho\obj\Debug\netcoreapp2.1\Razor\Views\Home\AddChampsToTable.g.cshtml.cs
