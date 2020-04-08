@@ -129,18 +129,31 @@ namespace DubuisGelin.Controllers
             };
             return View(newCreateValueVM);
         }
+        
 
-        [HttpPost("/addvalue/{id}")]
-        [ValidateAntiForgeryToken]
-        public IActionResult AddValues(CreateValueViewModel newCreateValueVM)
+        public IActionResult PostAddValues(CreateValueViewModel newCreateValueVM)
         {
-
+            var monDico = new Dictionary<int, string>();
             newCreateValueVM.IdLiaison = LiaisonValueService.CreateLiaison(null);
-            foreach (var item in newCreateValueVM.ListeChamps)
+
+            foreach (var id in newCreateValueVM.ListeIdChamps)
             {
-                ValueService.CreateValue(item.NomValeur, newCreateValueVM.IdLiaison, item.Id);
+                foreach (var name in newCreateValueVM.ListeNomValeurs)
+                {
+                    if (!monDico.TryGetValue(id, out string maRecherche))
+                    {
+                        monDico.Add(id, name);
+                    }
+                }
+
+                newCreateValueVM.ListeNomValeurs.RemoveAt(0);
             }
-            return View();
+
+            foreach (var item in monDico)
+            {
+                ValueService.CreateValue(item.Value, newCreateValueVM.IdLiaison, item.Key);
+            }
+            return Ok();
         }
 
     }

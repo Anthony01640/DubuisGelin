@@ -13,6 +13,10 @@ namespace DubuisGelin.Models.ValueViewModel
 
         public IEnumerable<ChampsCreateValueViewModel> ListeChamps { get; set; }
 
+        public IEnumerable<int> ListeIdChamps { get; set; }
+
+        public List<string> ListeNomValeurs { get; set; }
+
     }
 
 }
