@@ -1,0 +1,39 @@
+{
+  "Table": {
+    "Id": "",
+    "Nom": "",
+    "UserId": "",
+    "User": "",
+    "ChampsId": "",
+    "List<Champs>": ""
+  },
+
+  "LiaisonTableChamps": {
+    "1": "",
+    "|": "",
+    "n": ""
+  },
+
+  "Champs": {
+    "Id": "",
+    "Name": "",
+    "TableId": "",
+    "Table": "",
+    "Type": "",
+    "List<Value>": ""
+  },
+
+  "LiaisonChampsValeur": {
+    "1": "",
+    "|": "",
+    "n": ""
+  },
+
+  "Valeurs": {
+    "Id": "",
+    "Name": "",
+    "ChampsId": "",
+    "Champs": ""
+  }
+}
+

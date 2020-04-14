@@ -14,6 +14,8 @@ using DubuisGelin.Services.Interface;
 using DubuisGelin.Models.LiaisonViewModel;
 using DubuisGelin.Models.ValueViewModel;
 using DubuisGelin.Services.Enums;
+using System.IO;
+using Newtonsoft.Json;
 
 namespace DubuisGelin.Controllers
 {
@@ -159,5 +161,21 @@ namespace DubuisGelin.Controllers
             return Ok();
         }
 
+
+        [HttpGet("/mcd")]
+        public JsonResult getMcd()
+        {
+            var jsonfile = "mcd.json";
+            var pathTojson = Path.GetFullPath(jsonfile);
+            using (StreamReader r = new StreamReader(pathTojson))
+            {
+                string json = r.ReadToEnd();
+                json = json.Replace("\n", "").Replace("\r", "").Replace("\"", "");
+                
+                
+                return Json(json);
+            }
+            
+        }
     }
 }
