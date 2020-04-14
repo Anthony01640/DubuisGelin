@@ -23,6 +23,7 @@ namespace DubuisGelin.Areas.Identity.Pages.Account
         private readonly IEmailSender _emailSender;
 
         public RegisterModel(
+            IChampsService champsService,
             IUserService userServices,
             ITableService tableServices,
             UserManager<IdentityUser> userManager,
@@ -30,6 +31,7 @@ namespace DubuisGelin.Areas.Identity.Pages.Account
             ILogger<RegisterModel> logger,
             IEmailSender emailSender)
         {
+            ChampsService = champsService ?? throw new ArgumentNullException(nameof(champsService));
             UserServices = userServices;
             TableServices = tableServices;
             _userManager = userManager;
@@ -42,6 +44,7 @@ namespace DubuisGelin.Areas.Identity.Pages.Account
         public InputModel Input { get; set; }
 
         public string ReturnUrl { get; set; }
+        public IChampsService ChampsService { get; }
         public IUserService UserServices { get; }
         public ITableService TableServices { get; }
 
@@ -82,17 +85,9 @@ namespace DubuisGelin.Areas.Identity.Pages.Account
 
                     await UserServices.CreateUser(Input.Email);
                     var idUser = UserServices.GetUserByMail(Input.Email).Id;
-                    TableServices.CreateTableForNewUser(idUser);
+                    var listeId = TableServices.CreateTableForNewUser(idUser);
+                    ChampsService.CreateChampsForNewUser(listeId);
 
-                    //var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-                    //var callbackUrl = Url.Page(
-                    //    "/Account/ConfirmEmail",
-                    //    pageHandler: null,
-                    //    values: new { userId = user.Id, code = code },
-                    //    protocol: Request.Scheme);
-
-                    //await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
-                    //    $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
                     await _userManager.AddToRoleAsync(user, "Utilisateur");
                     await _signInManager.SignInAsync(user, isPersistent: false);
                     return LocalRedirect(returnUrl);

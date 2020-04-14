@@ -27,18 +27,20 @@ namespace DubuisGelin.Services.Implementation
             return Context.LiaisonValueChamps.FirstOrDefault(w => w.Id == id);
         }
 
-        public int CreateLiaison(IEnumerable<Value> Values)
+        public int CreateLiaison(IEnumerable<Value> Values, int idTable)
         {
             var liaison = new LiaisonValueChamps();
             if (Values == null)
             {
-
+                liaison.IdTable = idTable;
             }
             else
             {
+                liaison.IdTable = idTable;
                 liaison.Values = Values.ToList();
             }
             Context.LiaisonValueChamps.Add(liaison);
+            Context.SaveChanges();
             return liaison.Id;
         }
 

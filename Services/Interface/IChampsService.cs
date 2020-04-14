@@ -11,5 +11,7 @@ namespace DubuisGelin.Services.Interface
     {
         IEnumerable<Champs> GetChampsFromTable(int idTable);
         void AddChampsToTable(string nom, int idTable, Table table, TypeEnum type);
+
+        void CreateChampsForNewUser(List<int> listeId);
     }
 }

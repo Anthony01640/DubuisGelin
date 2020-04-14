@@ -41,16 +41,40 @@ namespace DubuisGelin.Services.Implementation
             return _context.Tables.Where(w => w.UserId == idUser);
         }
 
-        public void CreateTableForNewUser(Guid idUser)
+        public List<int> CreateTableForNewUser(Guid idUser)
         {
+            var retour = new List<int>();
             var newTable = new Table
             {
-                Nom = "test",
+                Nom = "Client",
                 UserId = idUser,
                 User = UserService.GetUserById(idUser),
             };
             _context.Tables.Add(newTable);
             _context.SaveChanges();
+            retour.Add(newTable.Id);
+
+            var newTable2 = new Table
+            {
+                Nom = "Factures",
+                UserId = idUser,
+                User = UserService.GetUserById(idUser),
+            };
+            _context.Tables.Add(newTable2);
+            _context.SaveChanges();
+            retour.Add(newTable2.Id);
+
+            var newTable3 = new Table
+            {
+                Nom = "Produits",
+                UserId = idUser,
+                User = UserService.GetUserById(idUser),
+            };
+            _context.Tables.Add(newTable3);
+            _context.SaveChanges();
+            retour.Add(newTable3.Id);
+
+            return retour;
         }
     }
 }

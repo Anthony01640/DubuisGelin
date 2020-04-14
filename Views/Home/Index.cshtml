@@ -8,6 +8,8 @@
 @foreach (var item in Model.TableUtilisateur)
 {<div>
     @Html.ActionLink(item.Name, nameof(HomeController.IndexTable), "Home", new { id = item.Id })
+    <label>Modifier</label>
+    <label>Supprimer</label>
 </div>
 
 }

@@ -80,7 +80,7 @@ namespace DubuisGelin.Controllers
                 ListeChamps = ChampsService.GetChampsFromTable(id).Select(p => new ChampViewModel {
                     Nom = p.Name,
                 }).ToList(),
-                ListeLiaison = LiaisonValueService.GetAllLiaison().Select(w => new LiaisonTableIndexViewModel {
+                ListeLiaison = LiaisonValueService.GetAllLiaison().Where(p => p.IdTable == id).Select(w => new LiaisonTableIndexViewModel {
                     Id = w.Id,
                     ListeValue = ValueService.GetValueFromLiaison(w.Id).Select(a => new ValuesViewModel {
                         Nom = a.Name,
@@ -120,6 +120,7 @@ namespace DubuisGelin.Controllers
         {
             var newCreateValueVM = new CreateValueViewModel()
             {
+                IdTable = id,
                 ListeChamps = ChampsService.GetChampsFromTable(id).Select(w => new ChampsCreateValueViewModel()
                 {
                     Id = w.Id,
@@ -134,7 +135,7 @@ namespace DubuisGelin.Controllers
         public IActionResult PostAddValues(CreateValueViewModel newCreateValueVM)
         {
             var monDico = new Dictionary<int, string>();
-            newCreateValueVM.IdLiaison = LiaisonValueService.CreateLiaison(null);
+            newCreateValueVM.IdLiaison = LiaisonValueService.CreateLiaison(null, newCreateValueVM.IdTable);
 
             foreach (var id in newCreateValueVM.ListeIdChamps)
             {
@@ -153,6 +154,8 @@ namespace DubuisGelin.Controllers
             {
                 ValueService.CreateValue(item.Value, newCreateValueVM.IdLiaison, item.Key);
             }
+            LiaisonValueService.UpdateLiaison(ValueService.GetValue(newCreateValueVM.IdLiaison).ToList(),newCreateValueVM.IdLiaison);
+
             return Ok();
         }
 

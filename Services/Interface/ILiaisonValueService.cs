@@ -10,7 +10,7 @@ namespace DubuisGelin.Services.Interface
     {
         IEnumerable<LiaisonValueChamps> GetAllLiaison();
 
-        int CreateLiaison(IEnumerable<Value> Values);
+        int CreateLiaison(IEnumerable<Value> Values, int idTable);
 
         void UpdateLiaison(IEnumerable<Value> values, int idLiaison);
     }

@@ -6,11 +6,14 @@
 @Html.ActionLink("Créer un champs", nameof(HomeController.AddChampsToTable), "Home")
 @Html.ActionLink("Créer des valeurs", nameof(HomeController.AddValues), "Home")
 
-<table>
+<label>Modifier la table</label>
+<label>Supprimer un champs</label>
+
+<table style="width:100%">
     <tr>
         @foreach (var champ in Model.ListeChamps)
         {
-            <th>@champ.Nom</th>
+            <th style="width:10%">@champ.Nom</th>
         }
     </tr>
     @foreach (var liaison in Model.ListeLiaison)

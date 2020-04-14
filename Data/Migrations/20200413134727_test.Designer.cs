@@ -7,11 +7,11 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace DubuisGelin.Data.Migrations
+namespace DubuisGelin.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200312121428_intitial")]
-    partial class intitial
+    [Migration("20200413134727_test")]
+    partial class test
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -38,6 +38,21 @@ namespace DubuisGelin.Data.Migrations
                     b.HasIndex("TableId");
 
                     b.ToTable("Champs");
+                });
+
+            modelBuilder.Entity("DubuisGelin.Data.Entity.LiaisonValueChamps", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("IdTable");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IdTable");
+
+                    b.ToTable("LiaisonValueChamps");
                 });
 
             modelBuilder.Entity("DubuisGelin.Data.Entity.Table", b =>
@@ -80,11 +95,15 @@ namespace DubuisGelin.Data.Migrations
 
                     b.Property<int>("ChampsId");
 
+                    b.Property<int>("IdLiaison");
+
                     b.Property<string>("Name");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ChampsId");
+
+                    b.HasIndex("IdLiaison");
 
                     b.ToTable("Value");
                 });
@@ -111,6 +130,10 @@ namespace DubuisGelin.Data.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles");
+
+                    b.HasData(
+                        new { Id = "1", ConcurrencyStamp = "b1ad5b97-999b-48c1-bb2c-c971792aaa6b", Name = "Utilisateur", NormalizedName = "UTILISATEUR" }
+                    );
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -206,11 +229,9 @@ namespace DubuisGelin.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.Property<string>("LoginProvider")
-                        .HasMaxLength(128);
+                    b.Property<string>("LoginProvider");
 
-                    b.Property<string>("ProviderKey")
-                        .HasMaxLength(128);
+                    b.Property<string>("ProviderKey");
 
                     b.Property<string>("ProviderDisplayName");
 
@@ -241,11 +262,9 @@ namespace DubuisGelin.Data.Migrations
                 {
                     b.Property<string>("UserId");
 
-                    b.Property<string>("LoginProvider")
-                        .HasMaxLength(128);
+                    b.Property<string>("LoginProvider");
 
-                    b.Property<string>("Name")
-                        .HasMaxLength(128);
+                    b.Property<string>("Name");
 
                     b.Property<string>("Value");
 
@@ -262,6 +281,14 @@ namespace DubuisGelin.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
+            modelBuilder.Entity("DubuisGelin.Data.Entity.LiaisonValueChamps", b =>
+                {
+                    b.HasOne("DubuisGelin.Data.Entity.Table", "Table")
+                        .WithMany("LiaisonValue")
+                        .HasForeignKey("IdTable")
+                        .OnDelete(DeleteBehavior.Restrict);
+                });
+
             modelBuilder.Entity("DubuisGelin.Data.Entity.Table", b =>
                 {
                     b.HasOne("DubuisGelin.Data.Entity.User", "User")
@@ -275,6 +302,11 @@ namespace DubuisGelin.Data.Migrations
                     b.HasOne("DubuisGelin.Data.Entity.Champs", "Champs")
                         .WithMany("Values")
                         .HasForeignKey("ChampsId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("DubuisGelin.Data.Entity.LiaisonValueChamps", "LiaisonValueChamps")
+                        .WithMany("Values")
+                        .HasForeignKey("IdLiaison")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

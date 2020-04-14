@@ -20,5 +20,6 @@ namespace DubuisGelin.Data.Entity
         public int ChampsId { get; set; }
 
         public IEnumerable<Champs> Champs { get; set; }
+        public IEnumerable<LiaisonValueChamps> LiaisonValue { get; set; }
     }
 }

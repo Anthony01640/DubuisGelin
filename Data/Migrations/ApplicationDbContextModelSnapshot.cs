@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace DubuisGelin.Data.Migrations
+namespace DubuisGelin.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     partial class ApplicationDbContextModelSnapshot : ModelSnapshot
@@ -44,7 +44,11 @@ namespace DubuisGelin.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("IdTable");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("IdTable");
 
                     b.ToTable("LiaisonValueChamps");
                 });
@@ -273,6 +277,14 @@ namespace DubuisGelin.Data.Migrations
                         .WithMany("Champs")
                         .HasForeignKey("TableId")
                         .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("DubuisGelin.Data.Entity.LiaisonValueChamps", b =>
+                {
+                    b.HasOne("DubuisGelin.Data.Entity.Table", "Table")
+                        .WithMany("LiaisonValue")
+                        .HasForeignKey("IdTable")
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 
             modelBuilder.Entity("DubuisGelin.Data.Entity.Table", b =>

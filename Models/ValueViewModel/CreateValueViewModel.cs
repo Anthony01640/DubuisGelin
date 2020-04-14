@@ -11,6 +11,8 @@ namespace DubuisGelin.Models.ValueViewModel
     {
         public int IdLiaison { get; set; }
 
+        public int IdTable { get; set; }
+
         public IEnumerable<ChampsCreateValueViewModel> ListeChamps { get; set; }
 
         public IEnumerable<int> ListeIdChamps { get; set; }
