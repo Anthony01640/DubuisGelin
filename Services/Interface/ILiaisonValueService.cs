@@ -13,5 +13,7 @@ namespace DubuisGelin.Services.Interface
         int CreateLiaison(IEnumerable<Value> Values, int idTable);
 
         void UpdateLiaison(IEnumerable<Value> values, int idLiaison);
+
+        void DeleteLiaison(int idLiaison);
     }
 }

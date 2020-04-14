@@ -166,10 +166,24 @@ namespace DubuisGelin.Services.Implementation
                     Context.Champs.Add(refFacture);
                     Context.SaveChanges();
 
-
                 }
             }
 
+        }
+
+        public void UpdateChamps(int idChamps, string newName)
+        {
+            var champs = Context.Champs.FirstOrDefault(w => w.Id == idChamps);
+            champs.Name = newName;
+            Context.Champs.Update(champs);
+            Context.SaveChanges();
+        }
+
+        public void DeleteChamps(int idChampsToDelete)
+        {
+            var champsToDelete = Context.Champs.FirstOrDefault(w => w.Id == idChampsToDelete);
+            Context.Champs.Remove(champsToDelete);
+            Context.SaveChanges();
         }
     }
 }

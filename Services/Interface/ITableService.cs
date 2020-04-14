@@ -15,5 +15,9 @@ namespace DubuisGelin.Services.Interface
         IEnumerable<Table> GetTablesFromUser(Guid idUser);
 
         List<int> CreateTableForNewUser(Guid idUser);
+
+        void UpdateTable(int idTable, string newName);
+
+        void DeleteTable(int idTable);
     }
 }

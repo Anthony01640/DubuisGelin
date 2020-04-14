@@ -28,16 +28,16 @@ namespace DubuisGelin.Data
             modelBuilder.Entity<Table>().HasKey(b => b.Id);
             modelBuilder.Entity<Table>().Property(m => m.Nom).IsRequired();
             modelBuilder.Entity<Table>().HasOne(m => m.User).WithMany(m => m.TableEnfant);
-            modelBuilder.Entity<Table>().HasMany(m => m.Champs).WithOne(w => w.Table).HasForeignKey(m => m.TableId);
+            modelBuilder.Entity<Table>().HasMany(m => m.Champs).WithOne(w => w.Table).HasForeignKey(m => m.TableId).OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<User>().ToTable(nameof(User));
             modelBuilder.Entity<User>().HasKey(k => k.Id);
-            modelBuilder.Entity<User>().HasMany(t => t.TableEnfant).WithOne(w => w.User).HasForeignKey(w => w.UserId);
+            modelBuilder.Entity<User>().HasMany(t => t.TableEnfant).WithOne(w => w.User).HasForeignKey(w => w.UserId).OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<Champs>().ToTable(nameof(Champs));
             modelBuilder.Entity<Champs>().HasKey(b => b.Id);
             modelBuilder.Entity<Champs>().HasOne(m => m.Table).WithMany(m => m.Champs);
-            modelBuilder.Entity<Champs>().HasMany(m => m.Values).WithOne(m => m.Champs).HasForeignKey(w => w.ChampsId);
+            modelBuilder.Entity<Champs>().HasMany(m => m.Values).WithOne(m => m.Champs).HasForeignKey(w => w.ChampsId).OnDelete(DeleteBehavior.Cascade);
             modelBuilder.Entity<Champs>().Property(w => w.TypeEnum).IsRequired();
 
             modelBuilder.Entity<Value>().ToTable(nameof(Value));

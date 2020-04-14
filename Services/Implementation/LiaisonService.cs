@@ -53,5 +53,12 @@ namespace DubuisGelin.Services.Implementation
         }
 
 
+        public void DeleteLiaison(int idLiaison)
+        {
+            var liaison = GetLiaison(idLiaison);
+            Context.LiaisonValueChamps.Remove(liaison);
+            Context.SaveChanges();
+        }
+
     }
 }

@@ -13,5 +13,9 @@ namespace DubuisGelin.Services.Interface
         void AddChampsToTable(string nom, int idTable, Table table, TypeEnum type);
 
         void CreateChampsForNewUser(List<int> listeId);
+
+        void UpdateChamps(int idChamps, string newName);
+
+        void DeleteChamps(int idChampsToDelete);
     }
 }

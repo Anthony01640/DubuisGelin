@@ -76,5 +76,19 @@ namespace DubuisGelin.Services.Implementation
 
             return retour;
         }
+
+        public void UpdateTable(int idTable, string newName)
+        {
+            var tableToUpdate = GetTableById(idTable);
+            tableToUpdate.Nom = newName;
+            _context.Update(tableToUpdate);
+        }
+
+        public void DeleteTable(int idTable)
+        {
+            var tableToDelete = GetTableById(idTable);
+            _context.Tables.Remove(tableToDelete);
+            _context.SaveChanges();
+        }
     }
 }

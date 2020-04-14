@@ -41,6 +41,11 @@ namespace DubuisGelin.Services.Implementation
             Context.SaveChanges();
         }
 
-
+        public void DeleteValues(int idLiaison)
+        {
+            var valuesToDelete = GetValueFromLiaison(idLiaison);
+            Context.Values.RemoveRange(valuesToDelete);
+            Context.SaveChanges();
+        }
     }
 }
