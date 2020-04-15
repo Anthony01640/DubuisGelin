@@ -20,16 +20,34 @@ namespace DubuisGelin.Services.Implementation
 
         public ApplicationDbContext Context { get; }
 
+
+        /// <summary>
+        /// Renvoie un champs en fonction de son id
+        /// </summary>
+        /// <param name="id">id du champs recherché</param>
+        /// <returns></returns>
         public Champs GetChamps(int id)
         {
             return Context.Champs.FirstOrDefault(w => w.Id == id);
         }
 
+        /// <summary>
+        /// Renvoie tous les champs d'une table
+        /// </summary>
+        /// <param name="idTable">Id de la table</param>
+        /// <returns></returns>
         public IEnumerable<Champs> GetChampsFromTable(int idTable)
         {
             return Context.Champs.Where(w => w.TableId == idTable);
         }
 
+        /// <summary>
+        /// Ajoute un champs à une table
+        /// </summary>
+        /// <param name="nom">Nom du champs</param>
+        /// <param name="idTable">Id de la table parent</param>
+        /// <param name="table">Table parent</param>
+        /// <param name="type">type du champs</param>
         public void AddChampsToTable(string nom, int idTable, Table table, TypeEnum type)
         {
             var newChamps = new Champs
@@ -44,6 +62,10 @@ namespace DubuisGelin.Services.Implementation
             Context.SaveChanges();
         }
 
+        /// <summary>
+        /// Créer des champs pour un nouvel utilisateur
+        /// </summary>
+        /// <param name="listeId"></param>
         public void CreateChampsForNewUser(List<int> listeId)
         {
             foreach (var id in listeId)
@@ -176,6 +198,11 @@ namespace DubuisGelin.Services.Implementation
 
         }
 
+        /// <summary>
+        /// Modifie un champs
+        /// </summary>
+        /// <param name="idChamps">Id du champs à modifier</param>
+        /// <param name="newName">nouveau Nom du champs</param>
         public void UpdateChamps(int idChamps, string newName)
         {
             var champs = Context.Champs.FirstOrDefault(w => w.Id == idChamps);
@@ -184,6 +211,10 @@ namespace DubuisGelin.Services.Implementation
             Context.SaveChanges();
         }
 
+        /// <summary>
+        /// Supprime un champs
+        /// </summary>
+        /// <param name="idChampsToDelete">Id du champs à supprimer</param>
         public void DeleteChamps(int idChampsToDelete)
         {
             var champsToDelete = Context.Champs.FirstOrDefault(w => w.Id == idChampsToDelete);

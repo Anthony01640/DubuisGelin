@@ -37,6 +37,10 @@ namespace DubuisGelin.Controllers
             ValueService = valueService ?? throw new ArgumentNullException(nameof(valueService));
         }
 
+        /// <summary>
+        /// Renvoie l'index de chaque utilisateur connecté
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public IActionResult Index()
         {
@@ -51,6 +55,10 @@ namespace DubuisGelin.Controllers
             return View(indexViewModel);
         }
 
+        /// <summary>
+        /// Get pour créer un table qui sera lié à un utilisateur
+        /// </summary>
+        /// <returns></returns>
         [HttpGet("/create")]
         public IActionResult CreateTable()
         {
@@ -60,7 +68,11 @@ namespace DubuisGelin.Controllers
             };
             return View(createTableVM);
         }
-
+        /// <summary>
+        /// Post créer une table qui sera lié à un utilisateur qui la crée
+        /// </summary>
+        /// <param name="createTableVM"></param>
+        /// <returns></returns>
         [HttpPost("/create")]
         [ValidateAntiForgeryToken]
         public IActionResult CreateTable(CreateTableViewModel createTableVM)
@@ -73,6 +85,11 @@ namespace DubuisGelin.Controllers
             return View();
         }
 
+        /// <summary>
+        /// Edit un table
+        /// </summary>
+        /// <param name="idTable">Id de la table à éditer</param>
+        /// <returns></returns>
         [HttpGet("/edittable/{idTable}")]
         public IActionResult EditTable(int idTable)
         {
@@ -84,7 +101,11 @@ namespace DubuisGelin.Controllers
             return View(tableToEdit);
         }
 
-
+        /// <summary>
+        /// Post de la table édité
+        /// </summary>
+        /// <param name="tableEdit">Comporte toute les modifications de la table</param>
+        /// <returns></returns>
         [HttpPost("/edittable/{idTable}")]
         [ValidateAntiForgeryToken]
         public IActionResult EditTable(TableUserViewModel tableEdit)
@@ -93,7 +114,11 @@ namespace DubuisGelin.Controllers
             return RedirectToAction(nameof(HomeController.Index));
         }
 
-
+        /// <summary>
+        /// Supprime une table
+        /// </summary>
+        /// <param name="idTable">Id de la table à supprimer</param>
+        /// <returns></returns>
         public IActionResult DeleteTable(int idTable)
         {
             var listIdLiaison = LiaisonValueService.GetAllLiaison().Where(m => m.IdTable == idTable);
@@ -105,6 +130,11 @@ namespace DubuisGelin.Controllers
             return RedirectToAction(nameof(HomeController.Index));
         }
 
+        /// <summary>
+        /// Get des cmlposant d'une table
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet("/indexChamps/{id}")]
         public IActionResult IndexTable(int id)
         {
@@ -129,6 +159,11 @@ namespace DubuisGelin.Controllers
             return View(indexTable);
         }
 
+        /// <summary>
+        /// Get pour ajouter un champs à une table
+        /// </summary>
+        /// <param name="id">id de la table</param>
+        /// <returns></returns>
         [HttpGet("/addchamps/{id}")]
         public IActionResult AddChampsToTable(int id)
         {
@@ -140,6 +175,11 @@ namespace DubuisGelin.Controllers
             return View(addChampsToTableVM);
         }
 
+        /// <summary>
+        /// Post pour ajouter un champs à une table
+        /// </summary>
+        /// <param name="addChampsToTableVM"></param>
+        /// <returns></returns>
         [HttpPost("/addchamps/{id}")]
         [ValidateAntiForgeryToken]
         public IActionResult AddChampsToTable(AddChampsToTableViewModel addChampsToTableVM)
@@ -152,6 +192,11 @@ namespace DubuisGelin.Controllers
             return View();
         }
 
+        /// <summary>
+        /// Edit un champs
+        /// </summary>
+        /// <param name="id">Id du champs à édité</param>
+        /// <returns></returns>
         [HttpGet("/editchampstotable/{id}")]
         public IActionResult EditChamps(int id)
         {
@@ -163,6 +208,11 @@ namespace DubuisGelin.Controllers
             return View(champstoEdit);
         }
 
+        /// <summary>
+        /// Post pour editer un champs
+        /// </summary>
+        /// <param name="champsEdit">Modification du champs</param>
+        /// <returns></returns>
         [HttpPost("/editchampstotable/{id}")]
         [ValidateAntiForgeryToken]
         public IActionResult EditChamps(TableUserViewModel champsEdit)
@@ -171,6 +221,11 @@ namespace DubuisGelin.Controllers
             return RedirectToAction(nameof(HomeController.Index));
         }
 
+        /// <summary>
+        /// Get pour supprimer un champs d'une table
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet("/deletechampstotable/{id}")]
         public IActionResult DeleteChampsToTable(int id)
         {
@@ -186,6 +241,11 @@ namespace DubuisGelin.Controllers
             return View(champs);
         }
 
+        /// <summary>
+        /// Post pour supprimer un ou des champs
+        /// </summary>
+        /// <param name="champs"></param>
+        /// <returns></returns>
         [HttpPost("/deletechampstotable/{id}")]
         [ValidateAntiForgeryToken]
         public IActionResult DeleteChampsToTable(TableForDeleteChampsViewModel champs)
@@ -197,6 +257,11 @@ namespace DubuisGelin.Controllers
             return RedirectToAction(nameof(HomeController.Index));
         }
 
+        /// <summary>
+        /// Get ajouter des valeurs
+        /// </summary>
+        /// <param name="id">id de la table</param>
+        /// <returns></returns>
         [HttpGet("/addvalue/{id}")]
         public IActionResult AddValues(int id)
         {
@@ -213,7 +278,11 @@ namespace DubuisGelin.Controllers
             return View(newCreateValueVM);
         }
 
-
+        /// <summary>
+        /// Post pour ajouter une valeur
+        /// </summary>
+        /// <param name="newCreateValueVM"></param>
+        /// <returns></returns>
         public IActionResult PostAddValues(CreateValueViewModel newCreateValueVM)
         {
             var monDico = new Dictionary<int, string>();
@@ -228,7 +297,6 @@ namespace DubuisGelin.Controllers
                         monDico.Add(id, name);
                     }
                 }
-
                 newCreateValueVM.ListeNomValeurs.RemoveAt(0);
             }
 
@@ -241,6 +309,11 @@ namespace DubuisGelin.Controllers
             return Ok();
         }
 
+        /// <summary>
+        /// Supprime un ensemble de valeur
+        /// </summary>
+        /// <param name="idLiaison"></param>
+        /// <returns></returns>
         public IActionResult DeleteLiaison(int idLiaison)
         {
             ValueService.DeleteValues(idLiaison);
@@ -248,6 +321,10 @@ namespace DubuisGelin.Controllers
             return RedirectToAction(nameof(HomeController.Index));
         }
 
+        /// <summary>
+        /// Renvoie un json avec toutes les infos
+        /// </summary>
+        /// <returns></returns>
         [HttpGet("/mcd")]
         public JsonResult GetMcd()
         {

@@ -1,0 +1,15 @@
+﻿@model DubuisGelin.Models.UserViewModel.AllUser
+
+@using DubuisGelin.Controllers
+
+
+<h2>Admninistration</h2>
+
+@foreach (var item in Model.ListeAllUser)
+{
+    <div>
+        <b>@Html.ActionLink(item.Nom, nameof(AdminController.IndexTableForUser), "Admin", new { id = item.Id }, new { style = "color : black;" })</b>
+        @Html.ActionLink("Supprimer l'utilisateur", nameof(AdminController.DeleteUser), "Admin", new { id = item.Id }, new { style = "color : black;" })
+    </div>
+
+}
