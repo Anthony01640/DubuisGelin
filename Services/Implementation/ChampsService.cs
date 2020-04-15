@@ -20,6 +20,11 @@ namespace DubuisGelin.Services.Implementation
 
         public ApplicationDbContext Context { get; }
 
+        public Champs GetChamps(int id)
+        {
+            return Context.Champs.FirstOrDefault(w => w.Id == id);
+        }
+
         public IEnumerable<Champs> GetChampsFromTable(int idTable)
         {
             return Context.Champs.Where(w => w.TableId == idTable);

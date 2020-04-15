@@ -7,9 +7,9 @@
 
 @foreach (var item in Model.TableUtilisateur)
 {<div>
-    @Html.ActionLink(item.Name, nameof(HomeController.IndexTable), "Home", new { id = item.Id })
-    <label>Modifier</label>
-    <label>Supprimer</label>
+    @Html.ActionLink(item.Name, nameof(HomeController.IndexTable), "Home", new { id = item.Id }, new { style ="color : black; text-decoration : none;" })
+    @Html.ActionLink("Edit", nameof(HomeController.EditTable), "Home", new { idTable = item.Id }, new { style ="color : black; text-decoration : none;" })
+    @Html.ActionLink("Supprimer", nameof(HomeController.DeleteTable), "Home", new { idTable = item.Id }, new { style ="color : black; text-decoration : none;" })
 </div>
 
 }

@@ -73,18 +73,54 @@ namespace DubuisGelin.Controllers
             return View();
         }
 
+        [HttpGet("/edittable/{idTable}")]
+        public IActionResult EditTable(int idTable)
+        {
+            var tableToEdit = new TableUserViewModel
+            {
+                Id = idTable,
+                Name = TableService.GetTableById(idTable).Nom
+            };
+            return View(tableToEdit);
+        }
+
+
+        [HttpPost("/edittable/{idTable}")]
+        [ValidateAntiForgeryToken]
+        public IActionResult EditTable(TableUserViewModel tableEdit)
+        {
+            TableService.UpdateTable(tableEdit.Id, tableEdit.Name);
+            return RedirectToAction(nameof(HomeController.Index));
+        }
+
+
+        public IActionResult DeleteTable(int idTable)
+        {
+            var listIdLiaison = LiaisonValueService.GetAllLiaison().Where(m => m.IdTable == idTable);
+            foreach (var item in listIdLiaison)
+            {
+                LiaisonValueService.DeleteLiaison(item.Id);
+            }
+            TableService.DeleteTable(idTable);
+            return RedirectToAction(nameof(HomeController.Index));
+        }
+
         [HttpGet("/indexChamps/{id}")]
         public IActionResult IndexTable(int id)
         {
             var indexTable = new IndexTableViewModel()
             {
                 NameTable = TableService.GetTableById(id).Nom,
-                ListeChamps = ChampsService.GetChampsFromTable(id).Select(p => new ChampViewModel {
+                ListeChamps = ChampsService.GetChampsFromTable(id).Select(p => new ChampViewModel
+                {
+                    Id = p.Id,
                     Nom = p.Name,
                 }).ToList(),
-                ListeLiaison = LiaisonValueService.GetAllLiaison().Where(p => p.IdTable == id).Select(w => new LiaisonTableIndexViewModel {
+                ListeLiaison = LiaisonValueService.GetAllLiaison().Where(p => p.IdTable == id).Select(w => new LiaisonTableIndexViewModel
+                {
                     Id = w.Id,
-                    ListeValue = ValueService.GetValueFromLiaison(w.Id).Select(a => new ValuesViewModel {
+                    ListeValue = ValueService.GetValueFromLiaison(w.Id).Select(a => new ValuesViewModel
+                    {
                         Nom = a.Name,
                         IdChamps = a.ChampsId
                     }).ToList(),
@@ -116,6 +152,50 @@ namespace DubuisGelin.Controllers
             return View();
         }
 
+        [HttpGet("/editchampstotable/{id}")]
+        public IActionResult EditChamps(int id)
+        {
+            var champstoEdit = new TableUserViewModel()
+            {
+                Name = ChampsService.GetChamps(id).Name,
+                Id = id,
+            };
+            return View(champstoEdit);
+        }
+
+        [HttpPost("/editchampstotable/{id}")]
+        [ValidateAntiForgeryToken]
+        public IActionResult EditChamps(TableUserViewModel champsEdit)
+        {
+            ChampsService.UpdateChamps(champsEdit.Id, champsEdit.Name);
+            return RedirectToAction(nameof(HomeController.Index));
+        }
+
+        [HttpGet("/deletechampstotable/{id}")]
+        public IActionResult DeleteChampsToTable(int id)
+        {
+            var champs = new TableForDeleteChampsViewModel
+            {
+                Id = id,
+                ListeChamps = ChampsService.GetChampsFromTable(id).Select(w => new ChampViewModel
+                {
+                    Id = w.Id,
+                    Nom = w.Name,
+                }).ToList()
+            };
+            return View(champs);
+        }
+
+        [HttpPost("/deletechampstotable/{id}")]
+        [ValidateAntiForgeryToken]
+        public IActionResult DeleteChampsToTable(TableForDeleteChampsViewModel champs)
+        {
+            foreach (var id in champs.ListeSelectId)
+            {
+                ChampsService.DeleteChamps(id);
+            }
+            return RedirectToAction(nameof(HomeController.Index));
+        }
 
         [HttpGet("/addvalue/{id}")]
         public IActionResult AddValues(int id)
@@ -132,7 +212,7 @@ namespace DubuisGelin.Controllers
             };
             return View(newCreateValueVM);
         }
-        
+
 
         public IActionResult PostAddValues(CreateValueViewModel newCreateValueVM)
         {
@@ -156,14 +236,20 @@ namespace DubuisGelin.Controllers
             {
                 ValueService.CreateValue(item.Value, newCreateValueVM.IdLiaison, item.Key);
             }
-            LiaisonValueService.UpdateLiaison(ValueService.GetValue(newCreateValueVM.IdLiaison).ToList(),newCreateValueVM.IdLiaison);
+            LiaisonValueService.UpdateLiaison(ValueService.GetValue(newCreateValueVM.IdLiaison).ToList(), newCreateValueVM.IdLiaison);
 
             return Ok();
         }
 
+        public IActionResult DeleteLiaison(int idLiaison)
+        {
+            ValueService.DeleteValues(idLiaison);
+            LiaisonValueService.DeleteLiaison(idLiaison);
+            return RedirectToAction(nameof(HomeController.Index));
+        }
 
         [HttpGet("/mcd")]
-        public JsonResult getMcd()
+        public JsonResult GetMcd()
         {
             var jsonfile = "mcd.json";
             var pathTojson = Path.GetFullPath(jsonfile);
@@ -171,11 +257,11 @@ namespace DubuisGelin.Controllers
             {
                 string json = r.ReadToEnd();
                 json = json.Replace("\n", "").Replace("\r", "").Replace("\"", "");
-                
-                
+
+
                 return Json(json);
             }
-            
+
         }
     }
 }

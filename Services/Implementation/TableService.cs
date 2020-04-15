@@ -82,6 +82,7 @@ namespace DubuisGelin.Services.Implementation
             var tableToUpdate = GetTableById(idTable);
             tableToUpdate.Nom = newName;
             _context.Update(tableToUpdate);
+            _context.SaveChanges();
         }
 
         public void DeleteTable(int idTable)

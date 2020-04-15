@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DubuisGelin.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200414160249_Delete cascade")]
-    partial class Deletecascade
+    [Migration("20200414191030_new")]
+    partial class @new
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -48,9 +48,11 @@ namespace DubuisGelin.Migrations
 
                     b.Property<int>("IdTable");
 
+                    b.Property<int?>("TableId");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("IdTable");
+                    b.HasIndex("TableId");
 
                     b.ToTable("LiaisonValueChamps");
                 });
@@ -283,10 +285,9 @@ namespace DubuisGelin.Migrations
 
             modelBuilder.Entity("DubuisGelin.Data.Entity.LiaisonValueChamps", b =>
                 {
-                    b.HasOne("DubuisGelin.Data.Entity.Table", "Table")
+                    b.HasOne("DubuisGelin.Data.Entity.Table")
                         .WithMany("LiaisonValue")
-                        .HasForeignKey("IdTable")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasForeignKey("TableId");
                 });
 
             modelBuilder.Entity("DubuisGelin.Data.Entity.Table", b =>

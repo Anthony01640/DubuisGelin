@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace DubuisGelin.Migrations
 {
-    public partial class test : Migration
+    public partial class @new : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -213,14 +213,15 @@ namespace DubuisGelin.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    IdTable = table.Column<int>(nullable: false)
+                    IdTable = table.Column<int>(nullable: false),
+                    TableId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_LiaisonValueChamps", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_LiaisonValueChamps_Table_IdTable",
-                        column: x => x.IdTable,
+                        name: "FK_LiaisonValueChamps_Table_TableId",
+                        column: x => x.TableId,
                         principalTable: "Table",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -303,9 +304,9 @@ namespace DubuisGelin.Migrations
                 column: "TableId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_LiaisonValueChamps_IdTable",
+                name: "IX_LiaisonValueChamps_TableId",
                 table: "LiaisonValueChamps",
-                column: "IdTable");
+                column: "TableId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Table_UserId",

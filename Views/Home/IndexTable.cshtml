@@ -7,23 +7,27 @@
 @Html.ActionLink("Créer des valeurs", nameof(HomeController.AddValues), "Home", null, new { @class = " btn btn-default" })
 
 <label>Modifier la table</label>
-<label>Supprimer un champs</label>
+@Html.ActionLink("Supprimer un champs", nameof(HomeController.DeleteChampsToTable), "Home", null, new { @class = " btn btn-default" })
 
 <table style="width:100%">
     <tr>
         @foreach (var champ in Model.ListeChamps)
         {
-            <th style="width:10%">@champ.Nom</th>
+            <th style="width:10%">@Html.ActionLink(champ.Nom, nameof(HomeController.EditChamps), "Home", new { id = champ.Id } )</th>
         }
+        
+        <th style="width:10%">Supression</th>
+        
     </tr>
     @foreach (var liaison in Model.ListeLiaison)
     {
-        <tr>
-            @foreach (var item in liaison.ListeValue)
-            {
-                <td>@item.Nom</td>
-            }
-        </tr>
+    <tr>
+        @foreach (var item in liaison.ListeValue)
+        {
+            <td>@item.Nom</td>
+        }
+        <td> @Html.ActionLink("Supprimer", nameof(HomeController.DeleteLiaison), "Home", new { idLiaison = liaison.Id}, new { style = "color: black; text-decoration : none;" }) </td>
+    </tr>
 
     }
 

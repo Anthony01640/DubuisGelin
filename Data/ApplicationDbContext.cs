@@ -48,7 +48,6 @@ namespace DubuisGelin.Data
             modelBuilder.Entity<LiaisonValueChamps>().ToTable(nameof(LiaisonValueChamps));
             modelBuilder.Entity<LiaisonValueChamps>().HasKey(w => w.Id);
             modelBuilder.Entity<LiaisonValueChamps>().HasMany(m => m.Values).WithOne(w => w.LiaisonValueChamps).HasForeignKey(p => p.IdLiaison);
-            modelBuilder.Entity<LiaisonValueChamps>().HasOne(m => m.Table).WithMany(w => w.LiaisonValue).HasForeignKey(p => p.IdTable).OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<IdentityRole>().HasData(
                 new IdentityRole() { Id = "1", Name = "Utilisateur", NormalizedName = "UTILISATEUR", ConcurrencyStamp = "b1ad5b97-999b-48c1-bb2c-c971792aaa6b" }

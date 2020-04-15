@@ -1,0 +1,20 @@
+﻿@model DubuisGelin.Models.TableViewModel.TableForDeleteChampsViewModel
+@using DubuisGelin.Controllers
+
+<h2>Supprimer un champs</h2>
+
+@using (Html.BeginForm(nameof(HomeController.DeleteChampsToTable), "Home", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @foreach (var item in Model.ListeChamps)
+    {
+        <input type="checkbox" name="ListeSelectId" value="@item.Id">@Html.Display(" ") @item.Nom
+    }
+
+    <div style="display : flex; ">
+        <div class="form-group">
+            <div class="">
+                <input type="submit" class="btn btn-default rounded bg-dark text-white mt-2" value="Supprimer" />
+            </div>
+        </div>
+    </div>
+}

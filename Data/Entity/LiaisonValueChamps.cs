@@ -12,7 +12,5 @@ namespace DubuisGelin.Data.Entity
         public List<Value> Values { get; set; }
 
         public int IdTable { get; set; }
-
-        public Table Table { get; set; }
     }
 }

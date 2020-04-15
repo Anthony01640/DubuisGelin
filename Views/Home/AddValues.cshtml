@@ -4,7 +4,6 @@
 
 <script>
     function CreateValue() {
-        debugger;
         var idTable = $("#idTable").val();
         var listNom = [];
         var $selectedNom = $(".value");
@@ -28,8 +27,8 @@
                     ListeIdChamps: listIdsChamps,
                     ListeNomValeurs: listNom,
                     },
-                success: function (data) {
-                        getIndexPartial(data.responseText)
+             success: function (data) {
+                        getIndexPartial()
                     },
                 error: function (data) {
                         alert(data.responseText);
