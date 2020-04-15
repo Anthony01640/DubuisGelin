@@ -1,6 +1,7 @@
 ﻿@model DubuisGelin.Models.ChampsViewModel.AddChampsToTableViewModel
 
 @using DubuisGelin.Controllers
+@using DubuisGelin.Services.Enums
 
 <h1>Ajouter un champs</h1>
 
@@ -16,7 +17,9 @@
         </div>
         <label>Choisissez le type du champs</label>
         <div>
-            @Html.EditorFor(m => m.Type)
+            <select asp-for="Type" asp-items="Html.GetEnumSelectList<TypeEnum>()">
+                <option selected="selected" value="">Please select</option>
+            </select>
         </div>
     </div>
     <div style="display : flex; ">

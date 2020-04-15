@@ -14,5 +14,9 @@ namespace DubuisGelin.Services.Interface
 
         User GetUserById(Guid Id);
 
+        IEnumerable<User> GetAllUser();
+
+        void DeleteUser(Guid id);
+
     }
 }

@@ -1,0 +1,12 @@
+﻿@model DubuisGelin.Models.HomeController.IndexViewModel
+
+@using DubuisGelin.Controllers
+<h2>Table de l'utilisateur</h2>
+
+@foreach (var item in Model.TableUtilisateur)
+{
+    <div>
+        @Html.ActionLink(item.Name, nameof(AdminController.TableIndex), "Admin", new { id = item.Id }, new { style = "color : black; text-decoration : none;" })
+    </div>
+
+}

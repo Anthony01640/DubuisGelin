@@ -1,0 +1,61 @@
+﻿@model DubuisGelin.Models.ValueViewModel.CreateValueViewModel
+
+@using DubuisGelin.Controllers
+
+<script>
+    function CreateValue() {
+        var idTable = $("#idTable").val();
+        var listNom = [];
+        var $selectedNom = $(".value");
+        if ($selectedNom.length > 0) {
+            $selectedNom.each(function () {
+                listNom.push($(this).val());
+            });
+        }
+        var listIdsChamps = [];
+        var $selectedIds = $(".id");
+        if ($selectedIds.length > 0) {
+            $selectedIds.each(function () {
+                listIdsChamps.push($(this).val());
+            });
+        }
+         $.ajax({
+                    url: '@Url.Action(nameof(HomeController.PostAddValues), "Home")',
+                    type: 'Post',
+             data: {
+                    IdTable: idTable, 
+                    ListeIdChamps: listIdsChamps,
+                    ListeNomValeurs: listNom,
+                    },
+             success: function (data) {
+                        getIndexPartial()
+                    },
+                error: function (data) {
+                        alert(data.responseText);
+                    }
+                    });
+    }
+</script>
+
+<h2>Ajouter une valeur</h2>
+
+@Html.HiddenFor(w => Model.IdTable, new { id="idTable"})
+
+@foreach (var champs in Model.ListeChamps)
+{
+    <label>Entrez une valeur pour le champ @champs.Nom</label>
+    <div>
+        @Html.Hidden(champs.Id.ToString(), champs.Id, new { @class = "id"})
+        @Html.TextBoxFor(m => champs.NomValeur, null, new { @class = "value" })
+    </div>
+}
+<div style="display : flex; ">
+    <div class="form-group">
+        <div class="">
+            <button class="btn btn-default bg-dark btn text-white mt-2" onclick="CreateValue()">Ajouter</button>
+        </div>
+    </div>
+</div>
+
+
+

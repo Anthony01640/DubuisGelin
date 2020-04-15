@@ -9,7 +9,15 @@ namespace DubuisGelin.Services.Interface
 {
     public interface IChampsService
     {
+        Champs GetChamps(int id);
+
         IEnumerable<Champs> GetChampsFromTable(int idTable);
         void AddChampsToTable(string nom, int idTable, Table table, TypeEnum type);
+
+        void CreateChampsForNewUser(List<int> listeId);
+
+        void UpdateChamps(int idChamps, string newName);
+
+        void DeleteChamps(int idChampsToDelete);
     }
 }
