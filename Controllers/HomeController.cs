@@ -283,8 +283,6 @@ namespace DubuisGelin.Controllers
         /// </summary>
         /// <param name="newCreateValueVM"></param>
         /// <returns></returns>
-        [HttpPost("/addvalue/{id}")]
-        [ValidateAntiForgeryToken]
         public IActionResult PostAddValues(CreateValueViewModel newCreateValueVM)
         {
             var monDico = new Dictionary<int, string>();
